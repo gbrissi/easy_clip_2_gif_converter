@@ -55,7 +55,7 @@ class _ImageDrawerInfoState extends State<ImageDrawerInfo> {
     return Consumer2<ImageDrawerController, ThemeController>(
       builder: (context, imgProvider, themeProvider, child) {
         return AnimatedContainer(
-          width: imgProvider.isOpen ? 180 : 0,
+          width: imgProvider.isOpen ? 220 : 0,
           height: widget.height,
           duration: const Duration(
             milliseconds: 300,

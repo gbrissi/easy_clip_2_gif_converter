@@ -3,8 +3,9 @@ import 'package:easy_clip_2_gif/src/widgets/player/components/remove_video_butto
 import 'package:easy_clip_2_gif/src/widgets/player/providers/player_layout_controller.dart';
 import 'package:easy_clip_2_gif/src/widgets/shared/row_separated.dart';
 import 'package:flutter/material.dart';
+import 'package:media_kit/media_kit.dart' as mk;
+import 'package:media_kit_video/media_kit_video.dart';
 import 'package:provider/provider.dart';
-import 'package:video_player/video_player.dart';
 
 import 'components/app_video_player.dart';
 import 'components/convert_info.dart';
@@ -25,7 +26,8 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
-  late VideoPlayerController _controller;
+  late final _player = mk.Player();
+  late final _controller = VideoController(_player);
   late final _videoPanelController = context.read<VideoPanelController>();
   ColorScheme get _btnColorScheme => Theme.of(context).buttonTheme.colorScheme!;
 
@@ -34,11 +36,18 @@ class _PlayerState extends State<Player> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.file(widget.convertVid.video)
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+
+    _player.open(
+      mk.Media(
+        "file:///${widget.convertVid.video.path}",
+      ),
+    );
+
+    _player.stream.width.listen((event) {
+      if (_player.state.width != null && mounted) {
         setState(() {});
-      });
+      }
+    });
 
     _videoPanelController.addListener(() {
       if (mounted) {

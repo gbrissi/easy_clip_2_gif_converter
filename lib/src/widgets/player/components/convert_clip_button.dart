@@ -31,7 +31,6 @@ class _ConvertClipButtonState extends State<ConvertClipButton> {
       ),
     ).then(
       (String? filePath) {
-        print("Dados: $filePath");
         if (filePath != null) {
           _vidPanelController.addGifToVid(
             widget.file,

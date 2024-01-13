@@ -1,17 +1,13 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:ffmpeg_helper/helpers/ffmpeg_helper_class.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player_media_kit/video_player_media_kit.dart';
+import 'package:media_kit/media_kit.dart';
 import 'app.dart';
 
 Future<void> main() async {
-  VideoPlayerMediaKit.ensureInitialized(
-    // android: true,
-    // iOS: true,
-    macOS: true,
-    windows: true,
-    linux: true,
-  );
+  WidgetsFlutterBinding.ensureInitialized();
+  // Necessary initialization for package:media_kit.
+  MediaKit.ensureInitialized();
 
   await FFMpegHelper.instance.initialize();
 

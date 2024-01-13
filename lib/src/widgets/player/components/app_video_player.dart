@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
-
-import 'controls_overlay.dart';
+import 'package:media_kit_video/media_kit_video.dart';
 
 class AppVideoPlayer extends StatelessWidget {
   const AppVideoPlayer({
     super.key,
     required this.controller,
   });
-  final VideoPlayerController controller;
+  final VideoController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +17,9 @@ class AppVideoPlayer extends StatelessWidget {
         child: Material(
           child: AspectRatio(
             aspectRatio: 16 / 9,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                VideoPlayer(controller),
-                ControlsOverlay(controller: controller),
-                VideoProgressIndicator(controller, allowScrubbing: true),
-              ],
+            child: Video(
+              // controls: (state) => AdaptiveVideoControls(state),
+              controller: controller,
             ),
           ),
         ),

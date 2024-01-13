@@ -5,8 +5,9 @@ import 'package:easy_clip_2_gif/src/widgets/player/components/info_size.dart';
 import 'package:easy_clip_2_gif/src/widgets/player/components/info_text.dart';
 import 'package:easy_clip_2_gif/src/widgets/shared/column_separated.dart';
 import 'package:flutter/material.dart';
+import 'package:media_kit/media_kit.dart';
+import 'package:media_kit_video/media_kit_video.dart';
 import 'package:mime/mime.dart';
-import 'package:video_player/video_player.dart';
 
 import 'convert_clip_button.dart';
 import 'info_range.dart';
@@ -19,7 +20,7 @@ class ConvertInfo extends StatefulWidget {
     required this.controller,
   });
   final File file;
-  final VideoPlayerController controller;
+  final VideoController controller;
 
   @override
   State<ConvertInfo> createState() => _ConvertInfoState();
@@ -30,9 +31,18 @@ class _ConvertInfoState extends State<ConvertInfo> {
   int get fileSizeInBytes => widget.file.lengthSync();
   double get fileSizeInKB => fileSizeInBytes / 1024;
   String get fileSizeView => "${fileSizeInKB.toStringAsFixed(2)}KB";
-  Size get resSize => widget.controller.value.size;
+
+  PlayerState get _playerState => widget.controller.player.state;
+  Duration get _playerDuration => _playerState.duration;
+  String get duration => formatDuration(_playerDuration);
+
+  double _getResValue(int? value) => value?.toDouble() ?? 0;
   String get resolution => "${resSize.width.toInt()}x${resSize.height.toInt()}";
-  String get duration => formatDuration(widget.controller.value.duration);
+  Size get resSize => Size(
+        _getResValue(_playerState.width),
+        _getResValue(_playerState.height),
+      );
+
   String get filetype =>
       lookupMimeType(
         widget.file.path,
@@ -108,8 +118,8 @@ class _ConvertInfoState extends State<ConvertInfo> {
             InfoRange(
               label: "duration",
               startValue: 0.0,
-              endValue: widget.controller.value.duration.inMilliseconds / 1000,
-              max: widget.controller.value.duration,
+              endValue: _playerDuration.inMilliseconds / 1000,
+              max: _playerDuration,
             )
           ],
         ),

@@ -35,9 +35,6 @@ class _SidebarThemeSwitcherState extends State<SidebarThemeSwitcher> {
         isDarkMode = themeController.isDarkMode;
       });
 
-      // Set theme in switcher for animated theme lib.
-      // TODO: RenderBox error without WidgetsBinding.
-      // It seems like removing AnimatedThemeSwitcher lib would be the best approach.
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
           widget.switcher.changeTheme(
