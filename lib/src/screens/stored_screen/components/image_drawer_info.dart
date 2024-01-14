@@ -60,51 +60,55 @@ class _ImageDrawerInfoState extends State<ImageDrawerInfo> {
           duration: const Duration(
             milliseconds: 300,
           ),
-          child: Container(
-            margin: const EdgeInsets.only(left: 4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-            child: ColorTheme(
-              color: themeProvider.isDarkMode
-                  ? Colors.grey.shade900
-                  : Colors.grey.shade200,
-              child: SingleChildScrollView(
-                child: ColumnSeparated(
-                  spacing: 4,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InfoSection(
-                      label: "image overview",
-                      children: [
-                        InfoText(
-                          label: "name",
-                          text: filename,
-                        ),
-                        InfoText(
-                          label: "path",
-                          text: widget.file.path,
-                        ),
-                        InfoText(
-                          label: "size",
-                          text: fileSizeView,
-                        ),
-                        InfoText(
-                          label: "type",
-                          text: filetype,
-                        ),
-                        // InfoText(
-                        //   label: "duration",
-                        //   text: duration,
-                        // ),
-                        // InfoText(
-                        //   label: "resolution",
-                        //   text: resolution,
-                        // ),
-                      ],
-                    ),
-                  ],
+          child: Card(
+            // color: ,
+            child: Container(
+              margin: const EdgeInsets.only(left: 4),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                // color: Theme.of(context).colorScheme.secondary,
+              ),
+              child: ColorTheme(
+                color: Theme.of(context).textTheme.bodyMedium!.color!,
+                // color: themeProvider.isDarkMode
+                //     ? Colors.grey.shade900
+                //     : Colors.grey.shade200,
+                child: SingleChildScrollView(
+                  child: ColumnSeparated(
+                    spacing: 4,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InfoSection(
+                        label: "image overview",
+                        children: [
+                          InfoText(
+                            label: "name",
+                            text: filename,
+                          ),
+                          InfoText(
+                            label: "path",
+                            text: widget.file.path,
+                          ),
+                          InfoText(
+                            label: "size",
+                            text: fileSizeView,
+                          ),
+                          InfoText(
+                            label: "type",
+                            text: filetype,
+                          ),
+                          // InfoText(
+                          //   label: "duration",
+                          //   text: duration,
+                          // ),
+                          // InfoText(
+                          //   label: "resolution",
+                          //   text: resolution,
+                          // ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

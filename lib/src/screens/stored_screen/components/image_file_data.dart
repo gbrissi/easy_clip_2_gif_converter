@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:easy_clip_2_gif/src/utils/download_file.dart';
+import 'package:easy_clip_2_gif/src/utils/show_file_in_folder.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widgets/player/components/gif_card_button.dart';
@@ -35,13 +37,19 @@ class _ImageFileDataState extends State<ImageFileData> {
     super.initState();
   }
 
-  void _downloadGif() {}
+  void _downloadGif() => downloadFile(
+        context,
+        widget.file,
+      );
 
-  void _openFileLocation() {}
+  void _openFileLocation() => showFileInFolder(
+        widget.file,
+      );
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Stack(
           children: [
@@ -81,12 +89,12 @@ class _ImageFileDataState extends State<ImageFileData> {
             ),
           ],
         ),
-        Flexible(
-          child: _imgHeight != null ? ImageDrawer(
-            file: widget.file,
-            height: _imgHeight!,
-          ) : const SizedBox.shrink()
-        ),
+        _imgHeight != null
+            ? ImageDrawer(
+                file: widget.file,
+                height: _imgHeight!,
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }

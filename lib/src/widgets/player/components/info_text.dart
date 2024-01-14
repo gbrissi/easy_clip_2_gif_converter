@@ -10,8 +10,18 @@ class InfoText extends StatefulWidget {
     super.key,
     required this.label,
     required this.text,
-    this.edit = false,
-  });
+    // this.edit = false,
+  })  : edit = false,
+        onChanged = null;
+
+  const InfoText.edit({
+    super.key,
+    required this.label,
+    required this.text,
+    this.onChanged,
+  }) : edit = true;
+
+  final void Function(String value)? onChanged;
   final String label;
   final String text;
   final bool edit;

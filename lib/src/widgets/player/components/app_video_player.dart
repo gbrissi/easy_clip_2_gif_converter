@@ -18,7 +18,7 @@ class AppVideoPlayer extends StatelessWidget {
           child: AspectRatio(
             aspectRatio: 16 / 9,
             child: Video(
-              // controls: (state) => AdaptiveVideoControls(state),
+              controls: (state) => AdaptiveVideoControls(state),
               controller: controller,
             ),
           ),

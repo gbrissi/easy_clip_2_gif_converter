@@ -27,7 +27,7 @@ class _RemoveVideoButtonState extends State<RemoveVideoButton> {
             widget.filePath,
           );
         }
-        
+
         context.pop();
       },
       title: "Remove video",
@@ -40,8 +40,9 @@ class _RemoveVideoButtonState extends State<RemoveVideoButton> {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: _removeVideo,
-      icon: const Icon(
-        Icons.remove,
+      icon: Icon(
+        Icons.delete,
+        color: Theme.of(context).buttonTheme.colorScheme!.secondary,
       ),
     );
   }

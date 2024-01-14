@@ -1,6 +1,5 @@
 import 'package:easy_clip_2_gif/src/global_controllers/video_panel_controller.dart';
 import 'package:easy_clip_2_gif/src/widgets/player/components/remove_video_button.dart';
-import 'package:easy_clip_2_gif/src/widgets/player/providers/player_layout_controller.dart';
 import 'package:easy_clip_2_gif/src/widgets/shared/row_separated.dart';
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart' as mk;
@@ -43,6 +42,8 @@ class _PlayerState extends State<Player> {
       ),
     );
 
+    _player.setVolume(0);
+
     _player.stream.width.listen((event) {
       if (_player.state.width != null && mounted) {
         setState(() {});
@@ -56,57 +57,56 @@ class _PlayerState extends State<Player> {
     });
   }
 
+  // TODO: Temporarily removed MainAxisSize.min
   Widget? get _resultCard => widget.convertVid.gif?.existsSync() ?? false
-      ? SizedBox(
-          width: double.infinity,
-          child: Card(
-            color: Theme.of(context).canvasColor.withOpacity(0.7),
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Stack(
-                children: [
-                  RowSeparated(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 4,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: SizedBox(
-                          width: 320,
-                          child: Material(
-                            child: AspectRatio(
-                              aspectRatio: 16 / 9,
-                              child: Image.file(
-                                widget.convertVid.gif!,
-                              ),
+      ? Card(
+          color: Theme.of(context).canvasColor.withOpacity(0.7),
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Stack(
+              children: [
+                RowSeparated(
+                  // mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 4,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: SizedBox(
+                        width: 320,
+                        child: Material(
+                          child: AspectRatio(
+                            aspectRatio: 16 / 9,
+                            child: Image.file(
+                              widget.convertVid.gif!,
                             ),
                           ),
                         ),
                       ),
-                      ConvertedGifInfo(
+                    ),
+                    ConvertedGifInfo(
+                      file: widget.convertVid.gif!,
+                    ),
+                  ],
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: RowSeparated(
+                    spacing: 4,
+                    children: [
+                      SaveGifButton(
                         file: widget.convertVid.gif!,
+                      ),
+                      GifCardButton(
+                        color: _btnColorScheme.secondary,
+                        icon: Icons.download,
+                        onTap: _downloadGif,
                       ),
                     ],
                   ),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: RowSeparated(
-                      spacing: 4,
-                      children: [
-                        SaveGifButton(
-                          file: widget.convertVid.gif!,
-                        ),
-                        GifCardButton(
-                          color: _btnColorScheme.secondary,
-                          icon: Icons.download,
-                          onTap: _downloadGif,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         )
@@ -130,6 +130,7 @@ class _PlayerState extends State<Player> {
                 ),
                 RowSeparated(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisSize: MainAxisSize.min,
                   spacing: 12,
                   children: [
                     AppVideoPlayer(

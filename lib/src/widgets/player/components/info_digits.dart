@@ -8,7 +8,9 @@ class InfoDigits extends StatefulWidget {
     required this.allowAbsOnly,
     required this.initialValue,
     required this.label,
+    this.onChanged,
   });
+  final void Function(double value)? onChanged;
   final double initialValue;
   final bool allowAbsOnly;
   final String label;
@@ -36,8 +38,9 @@ class _InfoDigitsState extends State<InfoDigits> {
         Flexible(
           child: IntrinsicWidth(
             child: DigitTextField(
-              min: 0,
-              max: 60,
+              minNumber: 0,
+              maxNumber: 60,
+              onChanged: widget.onChanged,
               allowAbsOnly: widget.allowAbsOnly,
               controller: _controller,
             ),

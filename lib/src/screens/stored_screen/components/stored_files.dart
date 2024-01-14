@@ -93,7 +93,10 @@ class _StoredFilesState extends State<StoredFiles> {
     final Directory docDir = await getApplicationDocumentsDirectory();
     final String appDocDirPath = "${docDir.path}\\easy_clip_2_gif\\gifs";
     final List<FileSystemEntity> dirFiles = Directory(appDocDirPath).listSync();
-    final List<File> files = dirFiles.whereType<File>().toList();
+    final List<File> files = dirFiles
+        .whereType<File>()
+        .where((file) => file.path.split(".").last == "gif")
+        .toList();
     final List<DateRelatedFileArray> drfArrayList =
         createDRFArrayFromFiles(files);
 
@@ -117,8 +120,11 @@ class _StoredFilesState extends State<StoredFiles> {
       shrinkWrap: true,
       children: dateRelatedFileArrays
           .map(
-            (dateRelatedFiles) => StoredFilesSection(
-              dateRelatedFiles: dateRelatedFiles,
+            (dateRelatedFiles) => Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: StoredFilesSection(
+                dateRelatedFiles: dateRelatedFiles,
+              ),
             ),
           )
           .toList(),

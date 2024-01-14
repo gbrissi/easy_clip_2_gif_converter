@@ -1,5 +1,4 @@
 import 'package:easy_clip_2_gif/src/constants/routes.dart';
-import 'package:easy_clip_2_gif/src/extensions/string_extension.dart';
 import 'package:easy_clip_2_gif/src/widgets/sidebar/controllers/sidebar_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -38,10 +37,7 @@ class _SidebarItemState extends State<SidebarItem> {
       ? Theme.of(context).buttonTheme.colorScheme!.primary.withOpacity(0.3)
       : Colors.transparent;
 
-  bool _getRouteActiveResult() {
-    // TODO: Temporary. (intend to keep it active even on non-absolute path);
-    return widget.route.path == curRoute;
-  }
+  bool _getRouteActiveResult() => widget.route.path == curRoute;
 
   viewRoute() {
     if (curRoute != widget.route.path && mounted) {

@@ -41,10 +41,7 @@ class _HomeAddVidState extends State<HomeAddVid> {
           }
         }
       }
-    } else {
-      // TODO:
-      // User canceled the picker
-    }
+    } 
   }
 
   @override

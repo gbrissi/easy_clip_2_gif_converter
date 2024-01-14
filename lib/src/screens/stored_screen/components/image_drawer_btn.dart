@@ -11,30 +11,39 @@ class ImageDrawerBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<ImageDrawerController, ThemeController>(
       builder: (context, drawerProvider, themeProvider, child) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary,
+        return Card(
+          shape: OutlineInputBorder(
+            borderSide: BorderSide.none,
             borderRadius: BorderRadius.only(
               topRight: _radius,
               bottomRight: _radius,
             ),
           ),
-          child: InkWell(
-            onTap: drawerProvider.isOpen
-                ? drawerProvider.closeDrawer
-                : drawerProvider.openDrawer,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8,
-              ),
-              child: Icon(
-                drawerProvider.isOpen
-                    ? Icons.chevron_left
-                    : Icons.chevron_right,
-                size: 12,
-                color: !themeProvider.isDarkMode
-                    ? Colors.white
-                    : Colors.grey.shade900,
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topRight: _radius,
+              bottomRight: _radius,
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: drawerProvider.isOpen
+                    ? drawerProvider.closeDrawer
+                    : drawerProvider.openDrawer,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                  ),
+                  child: Icon(
+                    drawerProvider.isOpen
+                        ? Icons.chevron_left
+                        : Icons.chevron_right,
+                    size: 12,
+                    // color: !themeProvider.isDarkMode
+                    //     ? Colors.white
+                    //     : Colors.grey.shade900,
+                  ),
+                ),
               ),
             ),
           ),

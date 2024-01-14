@@ -187,6 +187,7 @@ class GifConverter {
 
     ffmpeg.runAsync(
       cliCommand,
+      statisticsCallback: (statistics) => print("Stats: ${statistics.getSize()}, ${statistics.getBitrate()}, ${statistics}"),
       onComplete: (outputFile) {
         completer.complete(
           outputFile,

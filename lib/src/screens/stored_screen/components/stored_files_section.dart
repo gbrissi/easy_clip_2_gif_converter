@@ -26,6 +26,8 @@ class _StoredFilesSectionState extends State<StoredFilesSection> {
           widget.dateRelatedFiles.stringifyDaytime(),
         ),
         Wrap(
+          spacing: 8,
+          runSpacing: 8,
           children: widget.dateRelatedFiles.files
               .map(
                 (file) => ImageFileData(

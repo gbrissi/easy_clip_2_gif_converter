@@ -1,76 +1,85 @@
-import 'package:easy_clip_2_gif/src/widgets/player/components/digit_text_field.dart';
+import 'package:easy_clip_2_gif/src/services/gif_converter.dart';
 import 'package:easy_clip_2_gif/src/widgets/player/components/info_label.dart';
+import 'package:easy_clip_2_gif/src/widgets/shared/duration_text_field.dart';
 import 'package:flutter/material.dart';
 
 class InfoRange extends StatefulWidget {
   const InfoRange({
     super.key,
     required this.label,
-    required this.startValue,
-    required this.endValue,
-    required this.max,
+    required this.maxRange,
+    this.onChanged,
   });
   final String label;
-  final double startValue;
-  final double endValue;
-  final Duration max;
+  final Duration maxRange;
+  final void Function(DurationRange range)? onChanged;
 
   @override
   State<InfoRange> createState() => _InfoRangeState();
 }
 
-// TODO: Duration needs an adapted textfield, can't use digittextfield,
 class _InfoRangeState extends State<InfoRange> {
-  double get max => widget.max.inMilliseconds / 1000;
-
-  final FocusNode _startFocusNode = FocusNode();
-  final FocusNode _endFocusNode = FocusNode();
-
-  late final _startController = TextEditingController(
-    text: widget.startValue.toString(),
+  late final ValueNotifier<Duration> _endDuration = ValueNotifier(
+    _defaultStartDuration,
   );
 
-  late final _endController = TextEditingController(
-    text: widget.endValue.toString(),
+  late final ValueNotifier<Duration> _startDuration = ValueNotifier(
+    _endInitialDuration,
   );
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  Duration get _defaultEndDuration => const Duration(seconds: 10);
+  Duration get _defaultStartDuration => Duration.zero;
 
-  void _updateStartRange() {
-    final double? _startRange = double.tryParse(_startController.text);
-    if (_startRange != null) {
-      final double _endRange = double.parse(_endController.text);
-      if (_startRange < _endRange) {
-        _startController.text =
-            "0"; // Temporary initial value (Use state later.)
-      }
-    }
-  }
+  Duration get endDuration => _endDuration.value;
+  Duration get startDuration => _startDuration.value;
 
-  void _updateEndRange() {
-    final double? _endRange = double.tryParse(_endController.text);
-    if (_endRange != null) {
-      final double _startRange = double.parse(_startController.text);
-      if (_endRange > _startRange) {
-        _endController.text =
-            max.toString(); // Temporary initial value (Use state later.)
-      }
-    }
-  }
+  set endDuration(Duration duration) => _endDuration.value = duration;
+  set startDuration(Duration duration) => _startDuration.value = duration;
+
+  Duration get _endInitialDuration => widget.maxRange <= _defaultEndDuration
+      ? widget.maxRange
+      : _defaultEndDuration;
 
   @override
   void didUpdateWidget(oldWidget) {
-    if (oldWidget.startValue != widget.startValue) {
-      _startController.text = widget.startValue.toString();
-    }
-    if (oldWidget.endValue != widget.endValue) {
-      _endController.text = widget.endValue.toString();
+    final int maxRangeMilli = widget.maxRange.inMilliseconds;
+    final int oldMaxRangeMilli = oldWidget.maxRange.inMilliseconds;
+
+    bool shouldUpdate = maxRangeMilli != oldMaxRangeMilli;
+    if (shouldUpdate && mounted) {
+      endDuration = _endInitialDuration;
     }
 
     super.didUpdateWidget(oldWidget);
+  }
+
+  void _triggerOnChangedCallback() {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        if (widget.onChanged != null && mounted) {
+          final DurationRange range = DurationRange(
+            start: startDuration,
+            end: endDuration,
+          );
+
+          widget.onChanged!(range);
+        }
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    _endDuration.addListener(_triggerOnChangedCallback);
+    _startDuration.addListener(_triggerOnChangedCallback);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _startDuration.removeListener(_triggerOnChangedCallback);
+    _endDuration.removeListener(_triggerOnChangedCallback);
+    super.dispose();
   }
 
   @override
@@ -82,11 +91,10 @@ class _InfoRangeState extends State<InfoRange> {
         ),
         Flexible(
           child: IntrinsicWidth(
-            child: DigitTextField(
-              controller: _startController,
-              onChanged: (_) => _updateStartRange(),
-              min: 0,
-              max: max,
+            child: DurationTextField(
+              onChanged: (value) => startDuration = value,
+              initialValue: _defaultStartDuration,
+              maxDuration: endDuration,
             ),
           ),
         ),
@@ -96,11 +104,11 @@ class _InfoRangeState extends State<InfoRange> {
         ),
         Flexible(
           child: IntrinsicWidth(
-            child: DigitTextField(
-              onChanged: (_) => _updateEndRange(),
-              controller: _endController,
-              min: 0,
-              max: max,
+            child: DurationTextField(
+              onChanged: (value) => endDuration = value,
+              initialValue: _endInitialDuration,
+              minDuration: startDuration,
+              maxDuration: widget.maxRange,
             ),
           ),
         ),
