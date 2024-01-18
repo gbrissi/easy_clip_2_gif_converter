@@ -1,4 +1,4 @@
-import 'package:easy_clip_2_gif/src/global_controllers/video_panel_controller.dart';
+import 'package:easy_clip_2_gif/src/controllers/video_panel_controller.dart';
 import 'package:easy_clip_2_gif/src/screens/home_screen/components/home_add_vid.dart';
 import 'package:easy_clip_2_gif/src/screens/home_screen/components/home_grid_mode.dart';
 import 'package:easy_clip_2_gif/src/widgets/player/providers/layout_controller.dart';

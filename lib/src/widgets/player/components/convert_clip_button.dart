@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:easy_clip_2_gif/src/global_controllers/video_panel_controller.dart';
+import 'package:easy_clip_2_gif/src/controllers/video_panel_controller.dart';
 import 'package:easy_clip_2_gif/src/services/gif_converter.dart';
 import 'package:easy_clip_2_gif/src/widgets/player/providers/gif_config_controller.dart';
 import 'package:flutter/material.dart';

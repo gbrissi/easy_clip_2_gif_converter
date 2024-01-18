@@ -1,4 +1,4 @@
-import 'package:easy_clip_2_gif/src/global_controllers/video_panel_controller.dart';
+import 'package:easy_clip_2_gif/src/controllers/video_panel_controller.dart';
 import 'package:easy_clip_2_gif/src/widgets/player/components/remove_video_button.dart';
 import 'package:easy_clip_2_gif/src/widgets/shared/row_separated.dart';
 import 'package:flutter/material.dart';

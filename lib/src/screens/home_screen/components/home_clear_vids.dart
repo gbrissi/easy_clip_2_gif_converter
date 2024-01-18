@@ -1,5 +1,5 @@
 import 'package:easy_clip_2_gif/src/constants/text_styles.dart';
-import 'package:easy_clip_2_gif/src/global_controllers/video_panel_controller.dart';
+import 'package:easy_clip_2_gif/src/controllers/video_panel_controller.dart';
 import 'package:easy_clip_2_gif/src/utils/show_confirm_dialog.dart';
 import 'package:easy_clip_2_gif/src/widgets/shared/row_separated.dart';
 import 'package:flutter/material.dart';

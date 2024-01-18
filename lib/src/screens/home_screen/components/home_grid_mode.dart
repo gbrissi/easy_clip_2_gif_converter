@@ -4,7 +4,7 @@ import 'package:easy_clip_2_gif/src/widgets/shared/menu_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../global_controllers/video_panel_controller.dart';
+import '../../../controllers/video_panel_controller.dart';
 
 class HomeGridMode extends StatefulWidget {
   const HomeGridMode({super.key});

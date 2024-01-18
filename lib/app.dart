@@ -1,6 +1,6 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_clip_2_gif/router.dart';
-import 'package:easy_clip_2_gif/src/global_controllers/theme_controller.dart';
+import 'package:easy_clip_2_gif/src/controllers/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

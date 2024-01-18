@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:easy_clip_2_gif/src/global_controllers/theme_controller.dart';
+import 'package:easy_clip_2_gif/src/controllers/theme_controller.dart';
 import 'package:easy_clip_2_gif/src/widgets/player/components/info_section.dart';
 import 'package:easy_clip_2_gif/src/widgets/player/components/info_text.dart';
 import 'package:easy_clip_2_gif/src/widgets/shared/color_theme.dart';
